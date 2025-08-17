@@ -1,9 +1,9 @@
-FROM maven:3.8.3-openjdk-17 AS build
+FROM maven:latest AS build
 WORKDIR /app
 COPY . /app/
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17-alpine
+FROM openjdk:21-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
 EXPOSE 8080

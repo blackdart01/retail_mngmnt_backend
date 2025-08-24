@@ -26,9 +26,10 @@ public class IpAddressFilter extends OncePerRequestFilter {
 
         // Retrieve the client IP from the X-Forwarded-For header, as used by Render
         String clientIp = request.getHeader("X-Forwarded-For");
-        String clientUri = request.getRequestURI();
+        System.out.println("clientIp -> " + clientIp);
         if (clientIp == null || clientIp.isEmpty()) {
             clientIp = request.getRemoteAddr();
+            System.out.println("request.getRemoteAddr -> " + request.getRemoteAddr());
         }
 
         if (clientIp != null && allowedIps.contains(clientIp)) {

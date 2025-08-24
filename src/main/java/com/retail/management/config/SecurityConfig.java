@@ -29,7 +29,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         String allowedIpsEnv = ips;
-
+        System.out.println("ips -> " + allowedIpsEnv);
         if (allowedIpsEnv != null && !allowedIpsEnv.isEmpty()) {
             http.addFilterBefore(new IpAddressFilter(allowedIpsEnv), UsernamePasswordAuthenticationFilter.class);
         }

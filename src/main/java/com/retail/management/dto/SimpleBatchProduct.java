@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.Instant;
-import java.time.LocalDate;
 
 @Data@Builder
 public class SimpleBatchProduct {
@@ -15,7 +14,7 @@ public class SimpleBatchProduct {
     private Integer backstoreQuantity;
     private Integer rackQuantity;
     private InventoryLocation location;
-    private LocalDate expiryDate;
+    private Instant expiryDate;
     private Instant purchaseDate;
     private Long supplierId;
     private String referenceId;

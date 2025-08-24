@@ -14,6 +14,6 @@ public interface InventoryService {
     List<InventoryMovement> getMovementsBetween(Instant from, Instant to);
     DailyReportDTO generateReportForRange(LocalDate startDate, LocalDate endDate);
 //    InventoryMovement receivePurchase(Long productId, int quantity, double unitCost, double sellingPrice, Long purchaseOrderId, String note, LocalDate expiryDate);
-    InventoryMovement receivePurchase(Long productId, int quantity, double unitCost, double unitSellPrice, LocalDate expiryDate, Long supplierId, Long purchaseOrderId, String note);
+    InventoryMovement receivePurchase(Long productId, int quantity, double unitCost, double unitSellPrice, Instant expiryDate, Long supplierId, Long purchaseOrderId, String note);
     DailyReportDTO generateReportForRangeInSale(LocalDate startDate, LocalDate endDate);
 }

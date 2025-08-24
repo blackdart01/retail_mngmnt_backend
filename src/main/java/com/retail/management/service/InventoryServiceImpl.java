@@ -72,7 +72,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     @Transactional
     public InventoryMovement receivePurchase(Long productId, int quantity, double unitCost, double unitSellPrice,
-                                             LocalDate expiryDate, Long supplierId, Long purchaseOrderId, String note) {
+                                             Instant expiryDate, Long supplierId, Long purchaseOrderId, String note) {
 
         Product product = productRepository.findByIdForUpdate(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found: " + productId));

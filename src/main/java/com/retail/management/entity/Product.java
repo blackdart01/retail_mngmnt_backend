@@ -26,6 +26,14 @@ public class Product {
     @Size(max = 100)
     private String sku;
 
+    @NotBlank
+    @Size(max = 100)
+    private String weight;
+
+    @NotBlank
+    @Size(max = 100)
+    private String weightUnits;
+
     @Column(columnDefinition = "text")
     private String description;
 

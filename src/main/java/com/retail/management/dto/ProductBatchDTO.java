@@ -18,7 +18,7 @@ public class ProductBatchDTO {
     private double sellingPrice;
     private int quantity;
     private InventoryLocation location;
-    private LocalDate expiryDate;
+    private Instant expiryDate;
     private Instant purchaseDate;
     private Instant receivedAt;
     private SupplierDTO supplierName;

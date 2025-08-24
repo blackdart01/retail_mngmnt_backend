@@ -1,6 +1,7 @@
 package com.retail.management.config;
 import com.retail.management.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,8 +24,15 @@ public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
 
+    @Value("${ALLOWED_IPS:}")
+    private String ips;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String allowedIpsEnv = ips;
+
+        if (allowedIpsEnv != null && !allowedIpsEnv.isEmpty()) {
+            http.addFilterBefore(new IpAddressFilter(allowedIpsEnv), UsernamePasswordAuthenticationFilter.class);
+        }
         http
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
@@ -58,4 +66,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

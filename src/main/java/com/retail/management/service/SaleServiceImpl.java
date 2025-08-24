@@ -44,7 +44,7 @@ public class SaleServiceImpl implements SaleService {
         for(SimpleSale.SaleItem saleItem : simpleSale.getItems()){
 //            ProductBatch productBatch = productBatchRepository.findById(saleItem.getProductId()).orElse(null);
             ProductBatch productBatch = productBatchRepository.findWithProduct(saleItem.getProductId())
-                    .orElseThrow(() -> new RuntimeException("Product Not Found"));
+                    .orElse(null);
             if(ObjectUtils.isEmpty(productBatch)){
                 throw new RuntimeException("Product Not Found");
             }
@@ -70,6 +70,7 @@ public class SaleServiceImpl implements SaleService {
 
             saleItemList.add(SaleItem.builder()
                     .product(product)
+//                    .product(product)
                     .quantity(saleItem.getQuantity())
                     .sale(sale)
                     .unitPrice(sellingPrice)
@@ -114,8 +115,21 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public List<Sale> listAll() {
+//        saleRepository.findAll()
         return saleRepository.findAll();
+//        return saleRepository.findAllWithItemsAndProduct();
     }
+//    @Override
+//    public List<Sale> listAll() {
+//        List<Sale> saleList = saleRepository.findAll();
+//        for(Sale sale : saleList){
+//            for(SaleItem saleItem : sale.getItems()){
+//                ProductBatch productBatch = productBatchRepository.findWithProduct(saleItem.getProductBatch().getId()).orElse(null);
+//                saleItem.setProductBatch(productBatch);
+//            }
+//        }
+//        return saleList;
+//    }
 
     @Override
     public List<Sale> getSalesBetween(Instant from, Instant to) {

@@ -24,7 +24,7 @@ public class ProductBatch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
     @JsonBackReference
     private Product product;
@@ -49,7 +49,7 @@ public class ProductBatch {
     @Column(nullable = false)
     private InventoryLocation location; // BACKSTORE or RACK
 
-    private LocalDate expiryDate;
+    private Instant expiryDate;
 
     @Column(nullable = false, updatable = false)
     private Instant purchaseDate;

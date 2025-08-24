@@ -2,6 +2,7 @@ package com.retail.management.dto;
 
 import com.retail.management.entity.Category;
 import com.retail.management.entity.ProductBatch;
+import com.retail.management.entity.WeightUnit;
 import lombok.*;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public class ProductDTO {
     private Long id;
     private String name;
     private String sku;
+    private WeightUnit weightUnits;
+    private String weight;
     private String description;
     private Category category;
 //    private Long supplierId;

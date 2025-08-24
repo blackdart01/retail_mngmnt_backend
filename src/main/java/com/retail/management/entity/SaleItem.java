@@ -1,6 +1,7 @@
 package com.retail.management.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.retail.management.dto.ProductBatchDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -24,12 +25,12 @@ public class SaleItem {
     @JsonBackReference
     private Sale sale;
 
-//    @ManyToOne
-//    @JoinColumn(name = "product_id")
-//    private ProductBatch productBatch;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+//    @ManyToOne
+//    @JoinColumn(name = "product_id")
+//    private ProductBatch productBatch;
 
     @NotNull
     @Min(1)

@@ -76,12 +76,24 @@ public class ProductServiceImpl implements ProductService {
 //    }
 
     public Product createSimpleProduct(SimpleProduct simpleProduct){
+        Category categoryObj = categoryRepository.findById(simpleProduct.getCategoryId()).orElse(null);
+        String category = ObjectUtils.isNotEmpty(categoryObj) ? categoryObj.getName() : null;
+//        try {
+//            JsonNode categoryNode = new ObjectMapper().readValue(categoryObj.toString(), JsonNode.class);
+//            category = ObjectUtils.isNotEmpty(categoryNode) ? categoryNode.get("name").asText() : "";
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+        String sku = category.toUpperCase() + "_" + simpleProduct.getName().toUpperCase() + "_" + simpleProduct.getWeight() + "_" + simpleProduct.getWeightUnits().name();
         Product product = Product.builder()
                 .name(simpleProduct.getName())
                 .category(categoryRepository.findById(simpleProduct.getCategoryId()).orElse(null))
                 .description(simpleProduct.getDescription())
-                .sku(simpleProduct.getSku())
+                .sku(sku)
+                .weight(simpleProduct.getWeight())
+                .weightUnits(simpleProduct.getWeightUnits().name())
                 .backstoreQuantity(0)
+                .lowStockThreshold(simpleProduct.getLowStockThreshold())
                 .rackQuantity(0)
                 .stockQuantity(0)
                 .referenceId("")
@@ -159,6 +171,7 @@ public class ProductServiceImpl implements ProductService {
                 productBatchDTOS.add(ProductBatchDTO.builder()
                         .id(product.getId())
                         .purchaseDate(product.getPurchaseDate())
+                        .expiryDate(product.getExpiryDate())
                         .productId(product.getProduct().getId())
                         .product(toProductDTO(product.getProduct()))
                         .costPrice(product.getCostPrice())
@@ -182,6 +195,7 @@ public class ProductServiceImpl implements ProductService {
                 productBatchDTOS.add(ProductBatchDTO.builder()
                         .id(product.getId())
                         .purchaseDate(product.getPurchaseDate())
+                        .expiryDate(product.getExpiryDate())
                         .productId(product.getProduct().getId())
                         .costPrice(product.getCostPrice())
                         .sellingPrice(product.getSellingPrice())
@@ -216,6 +230,8 @@ public class ProductServiceImpl implements ProductService {
                 .backstoreQuantity(product.getBackstoreQuantity())
                 .lowStockThreshold(product.getLowStockThreshold())
                 .sku(product.getSku())
+                .weight(product.getWeight())
+                .weightUnits(ObjectUtils.isNotEmpty(product.getWeightUnits()) ? WeightUnit.valueOf(product.getWeightUnits()) : WeightUnit.OTHER)
                 .category(product.getCategory())
                 .stockQuantity(product.getStockQuantity())
                 .id(product.getId())
@@ -227,6 +243,7 @@ public class ProductServiceImpl implements ProductService {
                 return ProductBatchDTO.builder()
                         .id(product.getId())
                         .purchaseDate(product.getPurchaseDate())
+                        .expiryDate(product.getExpiryDate())
                         .productId(product.getProduct().getId())
                         .product(toProductDTO(product.getProduct()))
                         .costPrice(product.getCostPrice())
